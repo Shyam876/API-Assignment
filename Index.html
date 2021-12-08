@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table{
+                float: left;
+                margin : 10px;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div>
+                <button onclick="getData('query1')">Get Wholeseller Data</button>
+                <button onclick="getData('query2')">Get Retailer with single Wholeseller</button>
+                <button onclick="getData('query3')">Get Total Monthly turnover of each Wholeseller</button>
+                <button onclick="getData('query4')">Get Maximum Wholeseller turnover from each retailer</button>
+                <button onclick="getData('query5')">Get Maximum Wholeseller turnover in Whole Year</button>
+                <div id="query1"></div>
+                <div id="query2"></div>
+                <div id="query3"></div>
+                <div id="query4"></div>
+                <div id="query5"></div>
+
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+
+            /* Same functions being used toquery with diffrent arguments from provided URL */
+            function getData(query){
+
+                let url = 'http://localhost:8000/'+query;
+                fetch(url).then(function(response) {
+                    response.text().then(function(text) {
+
+                        //Parsing text to JSON
+                        let jsonData = JSON.parse(text);
+                        let size = Object.keys(jsonData).length
+
+                        //Creating a string with table tag and later th and tr added.
+                        let tableVal = '<table>';
+                        tableVal += '<tr>'
+                        for(key in jsonData[0]){
+                            tableVal += '<th>'+key.toUpperCase()+'</th>'
+                        }
+                        tableVal += '</tr><tr>'
+                        for(let i=0;i<size;i++){
+                            for(key in jsonData[i])
+                                tableVal += '<td>'+jsonData[i][key]+'</td>'
+                            tableVal += '</tr>'
+                        }
+                        
+                        tableVal += '</table>'
+                        document.getElementById(query).innerHTML = tableVal; // Appending Table to div
+                    });
+                })
+            }   
+        </script>
+
+    </body>
+</html>
