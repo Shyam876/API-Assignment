@@ -23,7 +23,7 @@ const {wholesellerData, retailerData, stockData} = require('./data.js')
 const {addDataToStock, addDataToWholeseller, addDataToRetailer} = require('./addDataQueries.js')
 
 //Connecting to local Shopping Database
-const connection = new sequelize('shopping','root','Syam123$@' ,{
+const connection = new sequelize(<Your DB Name>,'root',<Your Password> ,{
     dialect : 'mysql',
     define: {
       timestamps: false //Have disabled timestamps default for all future tables
